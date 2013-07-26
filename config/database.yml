@@ -1,0 +1,15 @@
+development:
+  adapter: postgresql
+  database: beaucoop
+  username: beaucoop
+  password: beaucoop
+  host: localhost
+  encoding: UTF8
+
+test: &test
+  adapter: postgresql
+  database: beaucoop_test
+  username: beaucoop
+  password: beaucoop
+  host: localhost
+  encoding: UTF8
