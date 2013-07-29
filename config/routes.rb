@@ -1,5 +1,10 @@
 Beaucoop::Application.routes.draw do
   devise_for :users
-  resources :books
-  resource :book, only: :show
+  resources :books do
+    collection do
+      get :search
+      post :search
+    end
+  end
+  root to: 'books#search'
 end

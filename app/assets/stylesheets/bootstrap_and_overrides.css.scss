@@ -1,3 +1,5 @@
 @import "bootstrap";
 body { padding-top: 60px; }
 @import "bootstrap-responsive";
+.ui-datepicker-inline { display: none !important; }
+.btn-primary { margin-left: 180px; }

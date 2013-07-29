@@ -9,7 +9,7 @@ class CreateBooks < ActiveRecord::Migration
       t.text      :subject
       t.string    :condition
       t.string    :isbn
-      t.money     :price
+      t.money     :price, allow_nil: true
       t.boolean   :in_shop
       t.integer   :consignor_id
       t.timestamp :consigned_date
