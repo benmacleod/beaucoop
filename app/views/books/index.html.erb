@@ -1,2 +1,6 @@
-<h1>Book#index</h1>
-<p>Find me in app/views/book/index.html.erb</p>
+<%= table_for @books, html: { class: 'datatable table table-hover table-bordered' } do-%>
+  <% columns :id, :title, :author, :publisher, :edition, :category, :isbn, :price, :in_shop %>
+  <% if can? :destroy, Book %>
+    <% column :delete_button, title: '' %>
+  <% end %>
+<% end %>

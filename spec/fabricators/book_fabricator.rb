@@ -19,7 +19,6 @@
 #  created_at     :datetime
 #  updated_at     :datetime
 #
-$seed ||= Random.new(123)
 
 Fabricator :book do
   title     { Faker::Lorem.sentence }
@@ -45,12 +44,12 @@ Fabricator :book do
   }
   subject        { Faker::Lorem.word }
   condition      { %w(excellent good fair poor).sample }
-  isbn           { '%09d' % $seed.rand(999_999_999) }
+  isbn           { '%09d' % rand(999_999_999) }
   consignor      { Fabricate :user }
   consigned_date {
     from = 1.year.ago
     Time.at(from + rand * (Time.now.to_f - from.to_f))
   }
-  price_cents { $seed.rand(10_000) }
+  price_cents { rand(10_000) }
   in_show { [true, false].sample }
 end

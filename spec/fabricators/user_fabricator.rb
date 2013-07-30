@@ -16,15 +16,13 @@
 #  updated_at             :datetime
 #
 
-$seed ||= Random.new(123)
-
 Fabricator :user do
   first_name { Faker::Name.first_name }
   last_name  { Faker::Name.last_name }
   email { |attrs|
     Faker::Internet.email"#{attrs[:first_name]} #{attrs[:last_name]}"
   }
-  phone_number { '04%08d' % $seed.rand(99_999_999) }
+  phone_number { '04%08d' % rand(99_999_999) }
   password 'password'
 end
 

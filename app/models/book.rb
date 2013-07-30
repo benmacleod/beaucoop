@@ -25,4 +25,14 @@ class Book < ActiveRecord::Base
   accepts_nested_attributes_for :consignor
   monetize :price_cents, allow_nil: true
   register_currency :aud
+
+  def self.search(params)
+    relation = self.scoped
+    params.each do |key, value|
+      unless value.blank?
+        relation = relation.where("#{key} LIKE ?", "%#{value}%")
+      end
+    end
+    relation
+  end
 end

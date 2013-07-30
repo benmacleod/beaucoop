@@ -6,5 +6,5 @@ Beaucoop::Application.routes.draw do
       post :search
     end
   end
-  root to: 'books#search'
+  root to: 'books#index'
 end
