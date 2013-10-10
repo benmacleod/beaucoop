@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 20130726100949) do
     t.string   "condition"
     t.string   "isbn"
     t.integer  "price_cents",    default: 0,     null: false
-    t.string   "price_currency", default: "USD", null: false
+    t.string   "price_currency", default: "AUD", null: false
     t.boolean  "in_shop"
     t.integer  "consignor_id"
-    t.datetime "consigned_date"
+    t.date     "consigned_date"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

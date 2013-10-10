@@ -8,7 +8,7 @@
   <%= f.input :category, as: :string %>
   <%= f.input :subject, as: :string %>
   <%= f.input :condition, as: :string %>
-  <%= f.input :isbn %>
+  <%= f.input :isbn %> <span id='lookup-isbn' class='btn btn-info' style='display: none;'>Look Up</span>
   <%= f.input :price, as: :currency %>
   <%= f.simple_fields_for :consignor do |cf| %>
     <%= cf.input :first_name, as: :string %>

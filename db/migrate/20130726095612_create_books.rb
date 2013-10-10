@@ -12,7 +12,7 @@ class CreateBooks < ActiveRecord::Migration
       t.money     :price, allow_nil: true
       t.boolean   :in_shop
       t.integer   :consignor_id
-      t.timestamp :consigned_date
+      t.date :consigned_date
 
       t.timestamps
     end

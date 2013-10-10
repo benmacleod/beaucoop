@@ -10,7 +10,7 @@
 
 $ ->
   $('.datepicker').datepicker
-    dateFormat: 'dd/mm/yyyy'
+    dateFormat: 'dd/mm/yy'
 
   $('form.readonly :input').attr 'readonly', true
 
@@ -24,3 +24,14 @@ $ ->
   $('.datatable tbody tr').on 'click', ->
     id = $(this).attr('id').replace 'book_', ''
     window.location = "/books/#{id}"
+
+  $('.book-isbn').on 'keydown', ->
+    if isbn.length == 10 or isbn.length == 13
+      $('#lookup-isbn').show()
+    else
+      $('#lookup-isbn').hide()
+
+  $('#lookup-isbn').on 'click', ->
+
+
+  isbn = -> $('.book_isbn').val().replace(/\D/g, '')

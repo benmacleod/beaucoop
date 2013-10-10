@@ -13,6 +13,10 @@ class BooksController < ApplicationController
     authorize! :create, Book
   end
 
+  def lookup
+
+  end
+
   def search
     if request.post?
       @books = Book.search(book_params).decorate

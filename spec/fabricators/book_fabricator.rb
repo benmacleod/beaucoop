@@ -51,5 +51,5 @@ Fabricator :book do
     Time.at(from + rand * (Time.now.to_f - from.to_f))
   }
   price_cents { rand(10_000) }
-  in_show { [true, false].sample }
+  in_shop { [true, false].sample }
 end

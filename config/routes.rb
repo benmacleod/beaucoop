@@ -2,7 +2,7 @@ Beaucoop::Application.routes.draw do
   devise_for :users
   resources :books do
     collection do
-      get :search
+      get :search, :lookup
       post :search
     end
   end
