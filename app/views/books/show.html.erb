@@ -23,6 +23,7 @@
     <% end %>
   <% end %>
   <%= f.input :consignment_date, as: :datepicker %>
+  <%= f.input :consignee, as: :string %>
   <%= f.input :in_shop %>
   <% if can? :update, book %>
     <%= f.button :submit, class: 'btn-primary' %>
