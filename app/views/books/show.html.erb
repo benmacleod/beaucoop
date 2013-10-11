@@ -14,13 +14,15 @@
   <%= f.input :condition, as: :string %>
   <%= f.input :isbn %>
   <%= f.input :price, as: :currency %>
-  <%= f.simple_fields_for :consignor do |cf| %>
-    <%= cf.input :first_name, as: :string %>
-    <%= cf.input :last_name, as: :string %>
-    <%= cf.input :email %>
-    <%= cf.input :phone_number, as: :string %>
+  <% if false %>
+    <%= f.simple_fields_for :consignor do |cf| %>
+      <%= cf.input :first_name, as: :string %>
+      <%= cf.input :last_name, as: :string %>
+      <%= cf.input :email %>
+      <%= cf.input :phone_number, as: :string %>
+    <% end %>
   <% end %>
-  <%= f.input :consigned_date, as: :datepicker %>
+  <%= f.input :consignment_date, as: :datepicker %>
   <%= f.input :in_shop %>
   <% if can? :update, book %>
     <%= f.button :submit, class: 'btn-primary' %>
