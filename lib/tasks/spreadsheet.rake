@@ -1,6 +1,6 @@
 desc 'Upload all books from spreadsheet to app as unapproved'
 task load_from_spreadsheet: :environment do
-  Rails.logger.info "Logging in to spreadsheet as #{ENV['GOOGLE_USERNAME']}"
+  Rails.logger.info "Logging in to spreadsheet as #{ENV['GOOGLE_USERNAME']} with #{ENV['GOOGLE_PASSWORD']}"
   session = GoogleDrive.login ENV['GOOGLE_USERNAME'], ENV['GOOGLE_PASSWORD']
   ss = session.spreadsheet_by_key(ENV['GOOGLE_SPREADSHEET'])
   Rails.logger.info 'Logged in'
