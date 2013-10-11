@@ -21,17 +21,17 @@ $ ->
       { bVisible: false, bSearchable: true, aTargets: [0] }
     ]
 
-  $('.datatable tbody tr').on 'click', ->
+  $(document).delegate '.datatable tbody tr', 'click', ->
     id = $(this).attr('id').replace 'book_', ''
     window.location = "/books/#{id}"
 
-  $('.book-isbn').on 'keydown', ->
+  $(document).delegate '.book-isbn', 'keydown', ->
     if isbn.length == 10 or isbn.length == 13
       $('#lookup-isbn').show()
     else
       $('#lookup-isbn').hide()
 
-  $('#lookup-isbn').on 'click', ->
+  $(document).delegate '#lookup-isbn', 'click', ->
 
 
   isbn = -> $('.book_isbn').val().replace(/\D/g, '')
