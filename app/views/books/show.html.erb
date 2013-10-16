@@ -25,6 +25,11 @@
   <%= f.input :consignment_date, as: :datepicker %>
   <%= f.input :consignee, as: :string %>
   <%= f.input :in_shop %>
+  <%= f.input :thumbnail, as: :string %>
+  <% if @book.thumbnail %>
+    <%= image_tag @book.thumbnail %>
+  <% end %>
+  <%= f.input :description %>
   <% if can? :update, book %>
     <%= f.button :submit, class: 'btn-primary' %>
   <% end %>

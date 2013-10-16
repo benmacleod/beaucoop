@@ -25,13 +25,43 @@ $ ->
     id = $(this).attr('id').replace 'book_', ''
     window.location = "/books/#{id}"
 
-  $(document).delegate '.book-isbn', 'keydown', ->
-    if isbn.length == 10 or isbn.length == 13
+  $(document).delegate '#book_isbn', 'keyup', -> check_isbn_length()
+  $(document).delegate '#book_isbn', 'mousedown', -> check_isbn_length()
+
+  $(document).delegate '#lookup-isbn', 'click', ->
+    $('#not-found').hide()
+    button = $(this)
+    unless button.hasClass('disabled')
+      button.addClass('disabled')
+      $.getJSON("https://www.googleapis.com/books/v1/volumes?q=isbn:#{isbn()}", (data) ->
+        if data.totalItems > 0 and info = data.items[0].volumeInfo
+          $('#book_title').val info.title
+          $('#book_author').val info.authors.join(',')
+          $('#book_publisher').val info.publisher
+          $('#book_edition').val info.publishedDate
+          $('#book_thumbnail').val info.imageLinks.thumbnail
+          $('img').attr 'src', info.imageLinks.thumbnail
+          $('img').show()
+          $('#book_description').val info.description
+        else
+          not_found()
+      ).fail(->
+        not_found()
+      ).always ->
+        button.removeClass('disabled')
+
+  isbn = -> $('#book_isbn').val().replace(/\D/g, '')
+
+  check_isbn_length = ->
+    $('#not-found').hide()
+    if isbn().length == 10 or isbn().length == 13
       $('#lookup-isbn').show()
     else
       $('#lookup-isbn').hide()
 
-  $(document).delegate '#lookup-isbn', 'click', ->
-
-
-  isbn = -> $('.book_isbn').val().replace(/\D/g, '')
+  not_found = (message) ->
+    message ||= 'Not found'
+    $('input:not(#book_isbn):not(.btn), textarea').val('')
+    $('#not-found').val(message)
+    $('#not-found').show()
+    $('img').hide()

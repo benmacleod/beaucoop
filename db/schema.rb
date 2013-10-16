@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131011020043) do
+ActiveRecord::Schema.define(version: 20131012121122) do
 
   create_table "books", force: true do |t|
     t.text     "title"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20131011020043) do
     t.boolean  "checked"
     t.string   "genre"
     t.text     "consignee"
+    t.text     "thumbnail"
+    t.text     "description"
   end
 
   create_table "users", force: true do |t|
