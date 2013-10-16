@@ -3,7 +3,11 @@ class BooksController < ApplicationController
   decorates_assigned :book
 
   def index
-    @books = Book.all.decorate
+    @books = if params[:expired_consignments]
+      Book.expired_consignments.decorate
+    else
+      Book.all.decorate
+    end
   end
 
   def show
@@ -63,6 +67,6 @@ class BooksController < ApplicationController
   end
 
   def book_params
-    params.require(:book).permit :title, :author, :publisher, :edition, :category, :subject, :isbn, :condition, :price, :consignor, :consigned_date, :in_shop
+    params.require(:book).permit :title, :author, :publisher, :edition, :category, :subject, :isbn, :condition, :price, :consignee, :consignment_date, :in_shop
   end
 end

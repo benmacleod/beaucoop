@@ -1,7 +1,7 @@
 <h2>Show Book</h2>
 <%
    klass = 'form-horizontal '
-   klass += 'readonly' unless can? :update, book
+   klass += 'readonly' unless can? :update, @book
 %>
 <%= simple_form_for @book, html: { class: klass } do |f| %>
   <%= f.error_notification %>
@@ -30,10 +30,13 @@
     <%= image_tag @book.thumbnail %>
   <% end %>
   <%= f.input :description %>
-  <% if can? :update, book %>
+  <% if can? :update, @book %>
     <%= f.button :submit, class: 'btn-primary' %>
+    <% if @book.expired_consignment? %>
+      <%= book.clear_consignment_button %>
+    <% end %>
   <% end %>
-  <% if can? :destroy, book %>
+  <% if can? :destroy, @book %>
     <%= book.delete_button %>
   <% end %>
 <% end %>
