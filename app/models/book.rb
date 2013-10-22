@@ -43,6 +43,6 @@ class Book < ActiveRecord::Base
   end
 
   def expired_consignment?
-    consignment_date < 6.months.ago
+    consignment_date && consignment_date < 6.months.ago
   end
 end
