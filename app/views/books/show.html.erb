@@ -14,6 +14,7 @@
   <%= f.input :condition, as: :string %>
   <%= f.input :isbn %>
   <%= f.input :price, as: :currency %>
+  <%= f.input :price_negotiable %>
   <% if false %>
     <%= f.simple_fields_for :consignor do |cf| %>
       <%= cf.input :first_name, as: :string %>

@@ -10,6 +10,7 @@
   <%= f.input :condition, as: :string %>
   <%= f.input :isbn %> <span id='lookup-isbn' class='btn btn-info' style='display: none;'>Look Up</span> <span id='not-found' style='display: none;'>Not Found</span>
   <%= f.input :price, as: :currency %>
+  <%= f.input :price_negotiable %>
   <% if false %>
     <%= f.simple_fields_for :consignor do |cf| %>
       <%= cf.input :first_name, as: :string %>
