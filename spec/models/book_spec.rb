@@ -14,7 +14,7 @@
 #  price_cents      :integer          default(0), not null
 #  price_currency   :string(255)      default("AUD"), not null
 #  in_shop          :boolean
-#  consignor_id     :integer
+#  user_id          :integer
 #  consignment_date :date
 #  created_at       :datetime
 #  updated_at       :datetime
@@ -23,10 +23,11 @@
 #  consignee        :text
 #  thumbnail        :text
 #  description      :text
+#  price_negotiable :boolean
 #
 
 require 'spec_helper'
 
 describe Book do
-  it { should belong_to(:consignor).class_name(User) }
+  it { should belong_to(:user) }
 end

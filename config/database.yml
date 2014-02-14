@@ -6,10 +6,9 @@ development:
   host: localhost
   encoding: UTF8
 
-test: &test
+test:
   adapter: postgresql
   database: beaucoop_test
-  username: beaucoop
-  password: beaucoop
+  username: postgres
   host: localhost
   encoding: UTF8

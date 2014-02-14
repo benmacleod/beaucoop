@@ -37,10 +37,10 @@ group :development, :test do
   gem 'better_errors'
   gem 'fabrication'
   gem 'faker'
-  gem 'jazz_hands'
+  gem 'pry-rails'
   gem 'rspec-rails'
 end
 
 group :test do
-  gem 'shoulda-matchers', github: 'thoughtbot/shoulda-matchers', branch: 'dp-rails-four'
+  gem 'shoulda-matchers'
 end

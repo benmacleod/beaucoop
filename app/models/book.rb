@@ -14,7 +14,7 @@
 #  price_cents      :integer          default(0), not null
 #  price_currency   :string(255)      default("AUD"), not null
 #  in_shop          :boolean
-#  consignor_id     :integer
+#  user_id          :integer
 #  consignment_date :date
 #  created_at       :datetime
 #  updated_at       :datetime
@@ -23,11 +23,11 @@
 #  consignee        :text
 #  thumbnail        :text
 #  description      :text
+#  price_negotiable :boolean
 #
 
 class Book < ActiveRecord::Base
-  belongs_to :consignor, class_name: User, foreign_key: :consignor_id
-  accepts_nested_attributes_for :consignor
+  belongs_to :user
   monetize :price_cents, allow_nil: true
   register_currency :aud
   scope :expired_consignments, -> { where 'consignment_date < ?', 6.months.ago }

@@ -19,20 +19,35 @@
 require 'spec_helper'
 
 describe User do
-  it { should have_many(:consigned_books).class_name(Book) }
+  it { should have_many :books }
 
   describe 'abilities' do
     require 'cancan/matchers'
 
     subject(:ability) { Ability.new user }
-    let(:user) { nil }
 
     context 'as an admin' do
       let(:user) { Fabricate :admin }
       it { should be_able_to(:manage, Book.new) }
     end
 
-    context 'as an standard user' do
+    context 'as a standard user' do
+      let(:user) { Fabricate :user }
+      context 'for books they own' do
+        let(:book) { Fabricate :book, user: user }
+        it { should be_able_to(:manage, book) }
+      end
+      context "for books they don't own" do
+        let(:book) { Book.new }
+        it { should be_able_to(:read, book) }
+        it { should_not be_able_to(:create, book) }
+        it { should_not be_able_to(:delete, book) }
+        it { should_not be_able_to(:update, book) }
+      end
+    end
+
+    context 'as a guest' do
+      let(:user) { nil }
       it { should be_able_to(:read, Book.new) }
       it { should_not be_able_to(:create, Book.new) }
       it { should_not be_able_to(:delete, Book.new) }

@@ -17,6 +17,6 @@
 #
 
 class User < ActiveRecord::Base
-  has_many :consigned_books, class_name: Book, foreign_key: :consignor_id
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable
+  has_many :books
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
 end

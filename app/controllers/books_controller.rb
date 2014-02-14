@@ -4,9 +4,9 @@ class BooksController < ApplicationController
 
   def index
     @books = if params[:expired_consignments]
-      Book.expired_consignments.decorate
+      Book.expired_consignments
     else
-      Book.all.decorate
+      Book.all
     end
   end
 

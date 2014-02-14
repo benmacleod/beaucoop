@@ -1,5 +1,5 @@
 <h2>Add Book</h2>
-<%= simple_form_for Book.new(in_shop: true), html: { class: 'form-horizontal' } do |f| %>
+<%= simple_form_for Book.new, html: { class: 'form-horizontal' } do |f| %>
   <%= f.error_notification %>
   <%= f.input :title, as: :string %>
   <%= f.input :author, as: :string %>
@@ -11,14 +11,6 @@
   <%= f.input :isbn %> <span id='lookup-isbn' class='btn btn-info' style='display: none;'>Look Up</span> <span id='not-found' style='display: none;'>Not Found</span>
   <%= f.input :price, as: :currency %>
   <%= f.input :price_negotiable %>
-  <% if false %>
-    <%= f.simple_fields_for :consignor do |cf| %>
-      <%= cf.input :first_name, as: :string %>
-      <%= cf.input :last_name, as: :string %>
-      <%= cf.input :email %>
-      <%= cf.input :phone_number, as: :string %>
-    <% end %>
-  <% end %>
   <%= f.input :consignment_date, as: :datepicker %>
   <%= f.input :consignee, as: :string %>
   <%= f.input :in_shop %>

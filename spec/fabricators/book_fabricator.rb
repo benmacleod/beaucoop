@@ -14,7 +14,7 @@
 #  price_cents      :integer          default(0), not null
 #  price_currency   :string(255)      default("AUD"), not null
 #  in_shop          :boolean
-#  consignor_id     :integer
+#  user_id          :integer
 #  consignment_date :date
 #  created_at       :datetime
 #  updated_at       :datetime
@@ -23,6 +23,7 @@
 #  consignee        :text
 #  thumbnail        :text
 #  description      :text
+#  price_negotiable :boolean
 #
 
 Fabricator :book do
@@ -50,8 +51,7 @@ Fabricator :book do
   subject        { Faker::Lorem.word }
   condition      { %w(excellent good fair poor).sample }
   isbn           { '%09d' % rand(999_999_999) }
-  consignor      { Fabricate :user }
-  consigned_date {
+  consignment_date {
     from = 1.year.ago
     Time.at(from + rand * (Time.now.to_f - from.to_f))
   }
