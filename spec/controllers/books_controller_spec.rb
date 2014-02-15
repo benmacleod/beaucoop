@@ -41,10 +41,16 @@ describe BooksController, type: :controller do
       end
     end
 
-
     describe "GET 'new'" do
       it 'should fail authorization' do
         get 'new'
+        response.should_not be_success
+      end
+    end
+
+    describe "POST 'create'" do
+      it 'should fail authorization' do
+        post :create, book: { title: 'params' }
         response.should_not be_success
       end
     end
@@ -52,8 +58,6 @@ describe BooksController, type: :controller do
 
   context 'for users' do
     login
-    let(:book) { mock Book, user_id: user_id }
-    let(:user_id) { controller.current_user.id }
 
     describe "GET 'new'" do
       it 'should render books/new' do
@@ -100,6 +104,34 @@ describe BooksController, type: :controller do
             response.should render_template 'books/show'
             assigns(:book).should == book
           end
+        end
+      end
+    end
+
+    describe "POST 'create'" do
+      before do
+        controller.current_user.should_receive(:books).and_return books
+        books.should_receive(:build).with('title' => 'params').and_return book
+        book.should_receive(:save).and_return success
+      end
+
+      context 'where the creation succeeds' do
+        let(:success) { true }
+        it 'should create a book and redirect to root with a flash notice' do
+          post :create, book: { title: 'params' }
+          response.should redirect_to root_url
+          flash[:notice].should == 'Book was created successfully'
+        end
+      end
+
+      context 'where the creation fails' do
+        let(:success) { false }
+        it 'should assign book, render books/show and set a flash alert' do
+          post :create, book: { title: 'params' }
+          response.should be_success
+          response.should render_template 'books/new'
+          flash[:alert].should == "Sorry, book couldn't be created"
+          assigns(:book).should == book
         end
       end
     end

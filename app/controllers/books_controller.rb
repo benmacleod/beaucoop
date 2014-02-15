@@ -46,7 +46,7 @@ class BooksController < ApplicationController
 
   def create
     authorize! :create, Book
-    @book = Book.new book_params
+    @book = current_user.books.build book_params
     if @book.save
       redirect_to root_url, notice: 'Book was created successfully'
     else
