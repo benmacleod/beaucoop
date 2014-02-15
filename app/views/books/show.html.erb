@@ -17,7 +17,7 @@
   <%= f.input :price_negotiable %>
   <%= f.input :consignment_date, as: :datepicker %>
   <%= f.input :consignee, as: :string %>
-  <%= f.input :in_shop %>
+  <%= f.input :in_shop if current_user.admin? %>
   <%= f.input :thumbnail, as: :string %>
   <% if @book.thumbnail %>
     <%= image_tag @book.thumbnail %>
