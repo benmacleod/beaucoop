@@ -7,7 +7,7 @@ class BooksController < ApplicationController
       Book.expired_consignments
     else
       Book.all
-    end
+    end.decorate
   end
 
   def show

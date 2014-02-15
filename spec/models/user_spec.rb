@@ -14,12 +14,32 @@
 #  admin                  :boolean
 #  created_at             :datetime
 #  updated_at             :datetime
+#  direct_email           :boolean
+#  contact_details        :text
 #
 
 require 'spec_helper'
 
 describe User do
+  subject(:user) { Fabricate.build :user, direct_email: direct_email }
+  let(:direct_email) { true }
   it { should have_many :books }
+
+  describe '#contact_details' do
+    context 'when user is an admin' do
+      subject(:user) { Fabricate.build :admin }
+      it { should_not validate_presence_of :contact_details }
+    end
+    context 'when direct_email is true' do
+      let(:direct_email) { true }
+      it { should_not validate_presence_of :contact_details }
+    end
+
+    context 'when direct_email is false' do
+      let(:direct_email) { false }
+      it { should validate_presence_of :contact_details }
+    end
+  end
 
   describe 'abilities' do
     require 'cancan/matchers'
@@ -32,7 +52,6 @@ describe User do
     end
 
     context 'as a standard user' do
-      let(:user) { Fabricate :user }
       context 'for books they own' do
         let(:book) { Fabricate :book, user: user }
         it { should be_able_to(:manage, book) }

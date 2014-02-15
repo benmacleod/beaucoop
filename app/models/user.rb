@@ -14,9 +14,12 @@
 #  admin                  :boolean
 #  created_at             :datetime
 #  updated_at             :datetime
+#  direct_email           :boolean
+#  contact_details        :text
 #
 
 class User < ActiveRecord::Base
   has_many :books
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :registerable
+  validates :contact_details, presence: { unless: ->(u){ u.direct_email? or u.admin? } }
 end

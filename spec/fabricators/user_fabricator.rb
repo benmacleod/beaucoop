@@ -14,6 +14,8 @@
 #  admin                  :boolean
 #  created_at             :datetime
 #  updated_at             :datetime
+#  direct_email           :boolean
+#  contact_details        :text
 #
 
 Fabricator :user do
@@ -24,6 +26,7 @@ Fabricator :user do
   }
   phone_number { '04%08d' % rand(99_999_999) }
   password 'password'
+  direct_email true
 end
 
 Fabricator :admin, from: :user do

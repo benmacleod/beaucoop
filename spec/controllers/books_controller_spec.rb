@@ -7,6 +7,9 @@ describe BooksController, type: :controller do
 
   context 'for guests' do
     describe "GET 'index'" do
+      before do
+        books.should_receive(:decorate).and_return books
+      end
       context 'requesting expired consignments' do
         it 'should assign expired consignments and render books/index' do
           Book.should_receive(:expired_consignments).and_return books

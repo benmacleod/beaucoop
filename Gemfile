@@ -42,5 +42,6 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rspec-html-matchers'
   gem 'shoulda-matchers'
 end
