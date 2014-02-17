@@ -15,9 +15,10 @@
   <%= f.input :isbn %>
   <%= f.input :price, as: :currency %>
   <%= f.input :price_negotiable %>
+  <%= f.input :expiry_date, as: :datepicker %>
   <%= f.input :consignment_date, as: :datepicker %>
-  <%= f.input :consignee, as: :string %>
-  <%= f.input :in_shop if current_user.admin? %>
+  <%= f.input :consignee, as: :string if current_user.andand.admin? %>
+  <%= f.input :in_shop if current_user.andand.admin? %>
   <%= f.input :thumbnail, as: :string %>
   <% if @book.thumbnail %>
     <%= image_tag @book.thumbnail %>

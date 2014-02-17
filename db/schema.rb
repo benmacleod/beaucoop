@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140215073856) do
+ActiveRecord::Schema.define(version: 20140215115826) do
 
   create_table "books", force: true do |t|
     t.text     "title"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20140215073856) do
     t.text     "thumbnail"
     t.text     "description"
     t.boolean  "price_negotiable"
+    t.date     "expiry_date"
   end
 
   create_table "users", force: true do |t|

@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.0.0'
 
 gem 'rails', '4.0.0'
+gem 'andand'
 gem 'bootstrap-sass', '~> 2.3.2.1'
 gem 'cancan'
 gem 'coffee-rails', '~> 4.0.0'
@@ -9,7 +10,7 @@ gem 'devise'
 gem 'draper'
 gem 'google_drive'
 gem 'isbndb', '~> 2.0.0'
-gem 'jquery-datatables-rails', git: 'git://github.com/rweng/jquery-datatables-rails.git'
+gem 'jquery-datatables-rails', github: 'rweng/jquery-datatables-rails'
 gem 'jquery-rails'
 gem 'jquery-turbolinks'
 gem 'jquery-ui-rails'
@@ -42,6 +43,7 @@ group :development, :test do
 end
 
 group :test do
+  gem 'rspec_candy'
   gem 'rspec-html-matchers'
   gem 'shoulda-matchers'
 end

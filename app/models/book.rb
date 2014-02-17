@@ -24,6 +24,7 @@
 #  thumbnail        :text
 #  description      :text
 #  price_negotiable :boolean
+#  expiry_date      :date
 #
 
 class Book < ActiveRecord::Base
@@ -31,7 +32,9 @@ class Book < ActiveRecord::Base
   monetize :price_cents, allow_nil: true
   register_currency :aud
   scope :expired_consignments, -> { where 'consignment_date < ?', 6.months.ago }
-
+  validate :expiry_under_six_months
+  before_save :populate_expiry_date
+  
   def self.search(params)
     relation = self.scoped
     params.each do |key, value|
@@ -44,5 +47,16 @@ class Book < ActiveRecord::Base
 
   def expired_consignment?
     consignment_date && consignment_date < 6.months.ago
+  end
+
+  private
+  def populate_expiry_date
+    self.expiry_date ||= 6.months.since
+  end
+
+  def expiry_under_six_months
+    if (self.expiry_date || Time.current) > 6.months.since
+      self.errors.add :expiry_date, 'must be less than 6 months away'
+    end
   end
 end

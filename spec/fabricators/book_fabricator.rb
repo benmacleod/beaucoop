@@ -24,6 +24,7 @@
 #  thumbnail        :text
 #  description      :text
 #  price_negotiable :boolean
+#  expiry_date      :date
 #
 
 Fabricator :book do
