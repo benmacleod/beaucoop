@@ -86,5 +86,5 @@ Beaucoop::Application.configure do
       :password       => ENV['SENDGRID_PASSWORD'],
       :domain         => 'herokuapp.com'
   }
-  config.action_mailer.default_url_options = {host: 'beaucoop.herokuapp.com'}
+  config.action_mailer.default_url_options = {host: 'beaucoop-staging.herokuapp.com'}
 end

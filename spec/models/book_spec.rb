@@ -30,7 +30,8 @@
 require 'spec_helper'
 
 describe Book do
-  it { should belong_to(:user) }
+  it { should belong_to :user }
+  it { should have_many :contacts }
 
   subject(:book) { Fabricate.build :book, expiry_date: expiry_date}
   let(:expiry_date) { nil }

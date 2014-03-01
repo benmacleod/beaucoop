@@ -12,7 +12,7 @@
   <%= f.input :category, as: :string %>
   <%= f.input :subject, as: :string %>
   <%= f.input :condition, as: :string %>
-  <%= f.input :isbn %>
+  <%= f.input :isbn %><span id='lookup-isbn' class='btn btn-info' style='display: none;'>Look Up</span> <span id='not-found' style='display: none;'>Not Found</span>
   <%= f.input :price, as: :currency %>
   <%= f.input :price_negotiable %>
   <%= f.input :expiry_date, as: :datepicker %>
@@ -30,7 +30,48 @@
       <%= book.clear_consignment_button %>
     <% end %>
   <% end %>
+  <% unless @book.user == current_user %>
+    <%= link_to 'Contact Seller', '#', class: 'btn', data: { toggle: 'modal', target: '#contact_seller'} %>
+  <% end %>
   <% if can? :destroy, @book %>
     <%= book.delete_button %>
   <% end %>
+<% end %>
+
+<% unless @book.user == current_user %>
+  <div class="modal fade" id="contact_seller" tabindex="-1" role="dialog" aria-labelledby="contact_seller_label" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title" id="contact_seller_label">Contact Seller</h4>
+        </div>
+        <div id='contact_details' class="modal-body">
+          <% if @book.in_shop? %>
+            <p>This book is in the Book Coop shop at Level 1 in Union House. Come down and pay us a visit or call us on 9344 XXXX to reserve the book for you!</p>
+          <% else %>
+            <% if @book.user.admin? %>
+              <p>This book belongs to the Book Coop, but is not in the Book Coop shop. Use this form to get in touch with us so we can get the book to you!</p>
+            <% elsif @book.user.direct_email? %>
+              <p>This book belongs to one of the Book Coop's users. Use this form to send them an email so you can ask them about the book.</p>
+            <% else %>
+              <p>The owner of this book can be contacted using the following details:</p>
+              <p><%= @book.user.contact_details %></p>
+            <% end %>
+            <% if @book.user.admin? or @book.user.direct_email? %>
+              <%= simple_form_for Contact.new(book: @book), remote: true do |cf| %>
+                <%= cf.input :book_id, as: :hidden %>
+                <%= cf.input :contact_details, hint: 'If you are logged in, we will send the seller your email. If not, you will have to provide the seller some details here so they can get in touch with you.' %>
+                <%= cf.input :message, hint: 'We will automatically send details of the book you are interested in, but an optional message can be included here.' %>
+                <%= cf.submit 'Send Email' %>
+              <% end %>
+            <% end %>
+          <% end %>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
 <% end %>

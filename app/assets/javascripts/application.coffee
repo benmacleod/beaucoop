@@ -65,3 +65,17 @@ $ ->
     $('#not-found').val(message)
     $('#not-found').show()
     $('img').hide()
+
+  $('#new_contact').bind 'ajax:success', ->
+    $('#contact_seller').modal 'hide'
+    alert "We're sending the seller an email on your behalf now!"
+
+  $('#new_contact').bind 'ajax:error', (_, data)->
+    message = "Sorry, but we couldn't submit your request.\n"
+    try
+      message += "There were problems with the data you entered:\n"
+      for field, errors of $.parseJSON(data.responseText).errors
+        message += "#{field.replace('_',' ')}: #{errors.join ', '}\n"
+    catch err
+      message += "Please reload the page and try again"
+    alert message
