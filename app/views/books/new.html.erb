@@ -19,7 +19,11 @@
   <%= f.input :description, as: :text %>
 
   <% if can? :create, Book %>
-    <%= f.button :submit, class: 'btn-primary' %>
+    <%
+       params = {class: 'btn-primary'}
+       params.merge!(confirm: 'In order to use this service, you agree to abide by the terms and conditions. Please signal your agreement by clicking OK.') unless current_user.admin?
+    %>
+    <%= f.button :submit, params %>
   <% end %>
 <% end %>
 

@@ -11,7 +11,7 @@ describe UserMailer do
       mail.to.should == [owner.email]
       mail.from.should == ['umsubookcoop@gmail.com']
       mail.body.encoded.should have_tag :p,
-          text: 'The book you have advertised for sale through UMSU Book Coop will expire in a month. If you wish to keep advertising on the UMSU catalogue, please go here and extend its expiry date.'
+          text: 'The book you have advertised for sale through UMSU Book Coop will expire in a month. If you wish to keep advertising it through the UMSU catalogue, please go here and extend its expiry date.'
       mail.body.encoded.should have_tag :a, text: 'here', with: {href: book_url(book)}
     end
   end
