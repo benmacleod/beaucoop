@@ -25,6 +25,7 @@
 #  description      :text
 #  price_negotiable :boolean
 #  expiry_date      :date
+#  warned_at        :date
 #
 
 Fabricator :book do

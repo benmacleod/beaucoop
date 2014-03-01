@@ -3,7 +3,7 @@ require 'spec_helper'
 describe BooksController, type: :controller do
 
   let(:book) { mock Book }
-  let(:books) { [book] }
+  let(:books) { [book, mock(Book)] }
 
   context 'for guests' do
     describe "GET 'index'" do
@@ -134,6 +134,24 @@ describe BooksController, type: :controller do
           assigns(:book).should == book
         end
       end
+    end
+  end
+
+  describe 'GET "warn_aged"' do
+    it 'should find all nearly aged books and mail their owners' do
+      Book.should_receive(:nearly_aged).and_return books
+      books.each { |book| book.should_receive :warn_aged }
+      get :warn_aged
+      response.should be_ok
+    end
+  end
+
+  describe 'GET "expire_aged"' do
+    it 'should find all aged books and delete them' do
+      Book.should_receive(:aged).and_return books
+      books.each { |book| book.should_receive :destroy }
+      get :expire_aged
+      response.should be_ok
     end
   end
 end

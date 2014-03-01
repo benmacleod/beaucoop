@@ -61,6 +61,16 @@ class BooksController < ApplicationController
     redirect_to root_url, notice: 'Book was deleted'
   end
 
+  def warn_aged
+    Book.nearly_aged.each(&:warn_aged)
+    render text: 'OK'
+  end
+
+  def expire_aged
+    Book.aged.each(&:destroy)
+    render text: 'OK'
+  end
+
   private
   def get_book
     @book = Book.find params[:id]

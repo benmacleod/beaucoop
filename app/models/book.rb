@@ -25,16 +25,21 @@
 #  description      :text
 #  price_negotiable :boolean
 #  expiry_date      :date
+#  warned_at        :date
 #
 
 class Book < ActiveRecord::Base
   belongs_to :user
+  has_many :contacts
   monetize :price_cents, allow_nil: true
   register_currency :aud
   scope :expired_consignments, -> { where 'consignment_date < ?', 6.months.ago }
   validate :expiry_under_six_months
   before_save :populate_expiry_date
-  
+
+  scope :nearly_aged, -> { joins(:user).where('users.admin IS NOT TRUE AND books.expiry_date < ? AND (books.warned_at IS NULL OR books.warned_at < ?)', 1.month.since, 1.month.ago) }
+  scope :aged, ->{ joins(:user).where('users.admin IS NOT TRUE AND books.expiry_date < ?', Time.current) }
+
   def self.search(params)
     relation = self.scoped
     params.each do |key, value|
@@ -47,6 +52,11 @@ class Book < ActiveRecord::Base
 
   def expired_consignment?
     consignment_date && consignment_date < 6.months.ago
+  end
+
+  def warn_aged
+    update_attributes warned_at: Time.current
+    UserMailer.warn_aged(self).deliver
   end
 
   private

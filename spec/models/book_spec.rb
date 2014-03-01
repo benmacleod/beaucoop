@@ -25,6 +25,7 @@
 #  description      :text
 #  price_negotiable :boolean
 #  expiry_date      :date
+#  warned_at        :date
 #
 
 require 'spec_helper'
@@ -42,6 +43,86 @@ describe Book do
 
   describe '#before_save' do
     it_should_run_callbacks :populate_expiry_date
+  end
+
+  describe 'scopes' do
+    let(:book) {
+      Fabricate :book, user: owner, expiry_date: expiry_date, warned_at: warned_at
+    }
+    let(:owner) { Fabricate :user, admin: admin }
+    let(:admin) { nil }
+    let(:expiry_date) { 1.day.ago }
+    let(:warned_at) { nil }
+    before { book }
+    describe '#nearly_aged' do
+      subject(:nearly_aged) { Book.nearly_aged.first }
+      context 'for a book owned by admin' do
+        let(:admin) { true }
+        it { should_not be_present }
+      end
+
+      context 'for a book not owned by admin' do
+        let(:admin) { false }
+        context 'where expiry date is within 1 month' do
+          let(:expiry_date) { 3.weeks.since }
+          context 'and the user was never warned about the book' do
+            let(:warned_at) { nil }
+            it { should be_present }
+          end
+
+          context 'and the user was warned about the book over a month ago' do
+            let(:warned_at) { 2.months.ago }
+            it { should be_present }
+          end
+
+          context 'and the user was warned about the book less than a month ago' do
+            let(:warned_at) { 3.weeks.ago }
+            it { should_not be_present }
+          end
+        end
+
+        context 'where expiry date is greater than 1 month' do
+          let(:expiry_date) { 2.months.since }
+          it { should_not be_present }
+        end
+      end
+    end
+
+    describe '#aged' do
+      subject(:aged) { Book.aged.first }
+      context 'for a book owned by admin' do
+        let(:admin) { true }
+        it { should_not be_present }
+      end
+
+      context 'for a book not owned by admin' do
+        let(:admin) { false }
+        context 'whose expiry date is in the past' do
+          let(:expiry_date) { 1.day.ago }
+          it { should be_present }
+        end
+
+        context 'whose expiry date is in the future' do
+          let(:expiry_date) { 1.day.since }
+          it { should_not be_present }
+        end
+      end
+    end
+  end
+
+  describe '#warn_aged' do
+    let(:mail) { double Mail }
+    let(:now) { Time.current }
+    before do
+      Time.stub current: now
+    end
+
+    it 'should send a mail to the user and update the warned_at timestamp to today' do
+      book.should_receive(:update_attributes).with warned_at: now
+      UserMailer.should_receive(:warn_aged).with(book).and_return mail
+      mail.should_receive :deliver
+      book.send :warn_aged
+    end
   end
 
   describe '#populate_expiry_date' do
