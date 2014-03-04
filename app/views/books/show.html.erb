@@ -48,7 +48,9 @@
         </div>
         <div id='contact_details' class="modal-body">
           <% if @book.in_shop? %>
-            <p>This book is in the Book Coop shop at Level 1 in Union House. Come down and pay us a visit or call us on 9344 XXXX to reserve the book for you!</p>
+            <p>This book is in the Co-op!</p>
+            <p>We are located on the first floor of Union House, opposite the food co-op. Opening hours are 11.00 am to 3.00 pm, Monday to Friday during teaching weeks.</p>
+            <p>Outside these times or to make an alternative arrangement, please email <a href="mailto:umsubookcoop@gmail.com">umsubookcoop@gmail.com</a></p>
           <% else %>
             <% if @book.user.admin? %>
               <p>This book belongs to the Book Coop, but is not in the Book Coop shop. Use this form to get in touch with us so we can get the book to you!</p>

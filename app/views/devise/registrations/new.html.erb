@@ -1,5 +1,15 @@
 <h2>Sign up</h2>
-
+<br/>
+<h4>How It Works:</h4>
+<p>You can list either books you want to buy, or books you have to sell. If selling online, you do not need to bring the book in to the Co-op. If a buyer expresses interest, we will send the seller an automated email with the buyer’s contact details. The seller can then contact the buyer and make an arrangement convenient to both to collect the book and payment. Prices may be negotiated between buyer and seller.</p>
+<p>If I’m interested in buying a book, sellers can contact me:</p>
+<ul>
+  <li>using the Email address below (please tick Direct email)</li>
+  <li>as below in Contact details (please give phone, email or both)</li>
+</ul>
+<p>Sellers are welcome to list the same book for sale on other sites.</p>
+<p>If you sell your book or dispose of it (e.g. lose it or give it away) within 6 months, it is your responsibility to delete it from the catalogue. We will send a reminder 5 months from the date listed asking you to either delete or extend your listing. The seller and not the Co-op is responsible for any disappointment arising from outdated listings.</p>
+<br/>
 <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= f.error_notification %>
 
@@ -12,7 +22,7 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, 'Sign up', confirm: 'In order to use this service, you agree to abide by the terms and conditions. Please signal your agreement by clicking OK.' %>
+    <%= f.button :submit, 'Sign up' %>
   </div>
 <% end %>
 

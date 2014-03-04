@@ -21,7 +21,12 @@
   <% if can? :create, Book %>
     <%
        params = {class: 'btn-primary'}
-       params.merge!(confirm: 'In order to use this service, you agree to abide by the terms and conditions. Please signal your agreement by clicking OK.') unless current_user.admin?
+       params.merge!(confirm: 'By clicking OK, I, the seller, agree that this book is for sale under the following conditions:
+       1. My price is not greater than 75% of the current recommended retail price and is subject to arbitrary reduction by the UMSU Book Co-operative or its agents if found to be greater
+       2. I accept responsibility for arranging for payment and collection of the book directly with the buyer and will delete my listing from the Co-operative catalogue if the book is sold or disposed of
+       3. If this book is unsold 6 months from the date listed then it will be deleted from the Co-operative’s online catalogue
+       4. The Co-operative is not responsible for any misunderstanding, loss or damage that may arise between me and the buyer
+       5. Under all circumstances the Co-operative and its agents are completely absolved from any liability to me for the loss, damage or theft of this book') unless current_user.admin?
     %>
     <%= f.button :submit, params %>
   <% end %>

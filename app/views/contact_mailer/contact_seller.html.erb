@@ -1,14 +1,9 @@
-<p>You have received an enquiry about your book from a potential buyer.</p>
-<% if @contact.user.andand.email %>
-  <p>In order to reply to them, simply reply to this email.</p>
-<% else %>
-  <p>They have given us the following contact details to enable you to get in touch with them. Please use these details instead of replying to this email:</p>
-  <p><%= @contact.contact_details || @contact.user.contact_details %></p>
-<% end %>
+<p>A potential buyer is interested in your book!</p>
 <% if @contact.message %>
   <p>They included the following message to you:</p>
   <p><%= @contact.message %></p>
 <% end %>
-<p>The current details you have listed for the book are <%= link_to 'here', book_url(@contact.book) %>. If the book is no longer for sale, please consider visiting this link and deleting it from the Book Coop system.</p>
+<p>Please contact them directly on <%= @contact.user.andand.email || @contact.contact_details || @contact.user.contact_details %> to make arrangements that suit you both for collection and payment.</p>
+<p>Don’t forget to login <%= link_to 'here', book_url(@contact.book) %> and delete the book when it is sold.</p>
 <p>Kind regards,</p>
 <p>UMSU Book Coop</p>
